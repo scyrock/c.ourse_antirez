@@ -1,16 +1,23 @@
 #include <stdio.h>
 
 int main(void){
-    /* The main function: 
-     * return as output an intager value
-     * recive as input nothing (void). (In modern version of c void should be omitted) */
+    /*
+     * The main function is the entry point of every C program.
+     * Return type: int - returns an integer status code
+     * Parameters: void - takes no parameters (modern C allows empty parentheses)
+     * Convention: return 0 indicates successful program execution
+     * non-zero values indicate various error conditions
+     */
+
     printf("Hello World\n");
     return 0;
-    /* As any function also the main function has a return value. Usually the value 0 indicate a succesful software execution.
-     * To visulize the returning value the following command can be used `./a.out; echo $?`.
-     * This convention can be useful to concatenate the execution of different commad (e.g. `./a.out && ls`). */
+
+    /*
+     * To view the return value after execution, use: ./a.out; echo $?
+     * This convention can be useful to chaining the execution of different commands (e.g. `./a.out && ls`). */
 }
 
-/* Add the flag -W -Wall to gcc command allow to recive warnings during
- * the code compialtion.
+/*
+ * Add the flag -W -Wall to gcc command allow to receive warnings during
+ * the code compilation.
  */

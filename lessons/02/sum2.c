@@ -1,21 +1,23 @@
 #include <stdio.h>
 
 int main(void){
-    /* In c it is always necessary to define the variable type.
-     * In this case three different intager varibles are declered.
-     * a,b are initialized to a predefined value
-     * c is initialized as a funtion of an expression. */
+    /*
+     * In C all variables must be declared with their type before use.
+     * - Declaration: reserves memory and associates a name with a type
+     * - Initialization: assigns an initial value during declaration
+    */
 
-    int a = 3;
+    int a = 3;      // Declaration with initialization
     int b = 8;
-    int c = a+b;
+    int c = a+b;    // Declaration with computed initialization
     
+    /*
+     * Declaration and initialization could be separated as follow
+     */
     // int a,b,c;
     // a = 3
     // b = 8
     // c = a+b
-    
-    /* A variable should be created without initialized is value. */
     
     printf("The sum is: %d\n", c);
     return 0;
