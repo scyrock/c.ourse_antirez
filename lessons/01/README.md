@@ -1,4 +1,4 @@
-# Lesson 01: Introduction to C Programming and Compiler
+# Lesson 01: Introduction to C Programming and Compiler [:video_camera:](https://youtu.be/HjXBXBgfKyk?si=WAmSqhA-oq7qHryI)
 
 This lesson covers the fundamental concepts of C programming, including basic program structure, function declarations, and the compiling system.
 
