@@ -1,4 +1,4 @@
-# Lesson 01: Introduction to C Programming and Compiler
+# Lesson 01: Introduction to C Programming and Compiler [:video_camera:](https://youtu.be/HjXBXBgfKyk?si=WAmSqhA-oq7qHryI)
 
 This lesson covers the fundamental concepts of C programming, including basic program structure, function declarations, and the compiling system.
 
@@ -7,7 +7,3 @@ This lesson covers the fundamental concepts of C programming, including basic pr
 - **`hello_world2.c`** - Manual function declaration.
 - **`hello_world3.c`** - Local file inclusion with #include directive.
 - **`file.c`** - Simple code file designed to be included by `hello_world3.c`.
-
-## Additional Resources
-- Use `man` command followed by a C function name (e.g., `man printf`) to display its documentation.
-- The `#include` directive replaces the corresponding line with the contents of the specified file before compilation.
