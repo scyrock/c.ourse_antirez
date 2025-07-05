@@ -1,4 +1,4 @@
-# Lesson 3: Variable Scope and Data Types 
+# Lesson 3: Variable Scope and Data Types [:video_camera:](https://youtu.be/Z84vlG1RRtg?si=f_IOEnU3jKwnXkez)
 
 This lesson covers fundamental concepts of variable scope, storage duration, and data types in C programming. 
 
