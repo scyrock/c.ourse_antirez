@@ -16,9 +16,9 @@ int main(void){
     incr();
     
     /*
-     * Although the function incr() is called multiple times, the output value 
-     * is always the same.
-     * This is due to the fact that x is a local variable of incr(). 
+     * Although the function incr() is called multiple times, the output value
+     * is always the same (2).
+     * This is due to the fact that x is a local variable of incr().
      * It is initialized at each instance, and it is destroyed at the end.
      */
     return 0;
