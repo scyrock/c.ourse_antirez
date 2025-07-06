@@ -1,4 +1,4 @@
-# Lesson 6: if, goto, while, recursion  [:video_camera:](https://youtu.be/lc7aYXNl1T8?si=zZPHeBqnIrOfynSe)
+# Lesson 6: if, goto, while, recursion [:video_camera:](https://youtu.be/lc7aYXNl1T8?si=zZPHeBqnIrOfynSe)
 
 This lesson explores program conditional statements, block, and different approaches to repetitive execution in C programming.
 
