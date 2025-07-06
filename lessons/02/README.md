@@ -1,4 +1,4 @@
-# Lesson 2: Introduction to C Programming
+# Lesson 2: Introduction to C Programming [:video_camera:](https://youtu.be/HjXBXBgfKyk?si=R4Z7Vjc4z68rclPY)
 
 This lesson covers the fundamental concepts of C programming, including basic program structure, functions, and variable declarations.
 
