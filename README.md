@@ -1,7 +1,7 @@
 # c.course_antirez
 *In a time dominated by LLMs, take your time to learn the grammar and write a good sonnet :)*
  
-This repository collects code and notes from [antirez C course](https://www.youtube.com/playlist?list=PLrEMgOSrS_3cFJpM2gdw8EGFyRBZOyAKY).
+This repository collects code and notes from [antirez's](https://github.com/antirez) [C programming course](https://www.youtube.com/playlist?list=PLrEMgOSrS_3cFJpM2gdw8EGFyRBZOyAKY).
  
 ## Useful material
 ### Vim
