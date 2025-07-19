@@ -35,6 +35,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 
 ### D
 - **Data types** - Lesson 3, 4
+- **Define directive** - Lesson 8
 
 ### F
 - **File inclusion** - Lesson 1
@@ -45,6 +46,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### G
 - **Global variables** - Lesson 3
 - **Goto statements** - Lesson 6, 7
+- **Game of life** - Lesson 8
 
 ### I
 - **Integer types** - Lesson 3, 4
