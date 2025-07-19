@@ -18,6 +18,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 5**: Arrays and Strings
 - **Lesson 6**: if, goto, while, recursion
 - **Lesson 7**: while, for and switch
+- **Lesson 8**: Game of Life
+- **Lesson 9**: Pointers
 ---
 ## Analytic index
 ### A
@@ -40,7 +42,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### F
 - **File inclusion** - Lesson 1
 - **Format specifiers** - Lesson 2, 3, 4, 5
-- **Functions** - Lesson 1, 2, 4, 6
+- **Functions** - Lesson 1, 2, 4, 6, 9
 - **For loops** - Lesson 7
 
 ### G
@@ -59,6 +61,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### P
 - **Pass-by-value** - Lesson 3
 - **`printf()`** - Lesson 1, 3
+- **Pointers** - Lesson 8, 9
 
 ### S
 - **`sizeof()`** - Lesson 4
