@@ -194,5 +194,24 @@ int main(void){
         compute_new_state(grid_b, grid_a);  
     }
 
+    
+    /* Exploiting more advanced concepts (see Lesson 11), the main while loop can
+     * be implemented in a leaner way using pointers. The swap between the two
+     * states is performed using the tmp pointer. */
+    
+    /*
+    char *old = grid_a;
+    char *new = grid_b;
+    while(1){
+        compute_new_state(old, new);
+        print_grid(new);
+        usleep(100000);    
+        char *tmp = old;
+        old = new;
+        new = tmp;
+
+    }
+    */
+
     return 0;
 }
