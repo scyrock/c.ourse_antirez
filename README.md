@@ -18,11 +18,15 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 5**: Arrays and Strings
 - **Lesson 6**: if, goto, while, recursion
 - **Lesson 7**: while, for and switch
+- **Lesson 8**: Game of Life
+- **Lesson 9**: Pointers
+- **Lesson 10**: Pointer Operations
+- **Lesson 11**: String Manipulation and Pointers Casting
 ---
 ## Analytic index
 ### A
 - **Arrays** - Lesson 5, 7
-- **ASCII values** - Lesson 5
+- **ASCII values** - Lesson 5, 11
 - **Assembly generation** - Lesson 1
 
 ### B
@@ -32,23 +36,26 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### C
 - **Character variables** - Lesson 5
 - **Compilation process** - Lesson 1
+- **Casting** - Lesson 10, 11
 
 ### D
 - **Data types** - Lesson 3, 4
+- **Define directive** - Lesson 8
 
 ### F
 - **File inclusion** - Lesson 1
 - **Format specifiers** - Lesson 2, 3, 4, 5
-- **Functions** - Lesson 1, 2, 4, 6
 - **For loops** - Lesson 7
+- **Functions** - Lesson 1, 2, 4, 6, 9
 
 ### G
+- **Game of life** - Lesson 8
 - **Global variables** - Lesson 3
 - **Goto statements** - Lesson 6, 7
 
 ### I
-- **Integer types** - Lesson 3, 4
 - **If statements** - Lesson 6, 7
+- **Integer types** - Lesson 3, 4
 
 ### L
 - **Local variables** - Lesson 3, 7
@@ -57,11 +64,13 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### P
 - **Pass-by-value** - Lesson 3
 - **`printf()`** - Lesson 1, 3
+- **Pointers** - Lesson 8, 9, 10, 11
+- **Prefix length string** - Lesson 11
 
 ### S
 - **`sizeof()`** - Lesson 4
 - **Static variables** - Lesson 3
-- **Strings** - Lesson 5
+- **Strings** - Lesson 5, 11
 - **Switch statements** - Lesson 7
 
 ### T
