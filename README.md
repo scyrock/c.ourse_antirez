@@ -22,6 +22,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 9**: Pointers
 - **Lesson 10**: Pointer Operations
 - **Lesson 11**: String Manipulation and Pointers Casting
+- **Lesson 12**: Dynamic Memory and Pre-Fixed Length String
+- **Lesson 13**: Memory Management and Pre-Fixed Length String Optimization
 ---
 ## Analytic index
 ### A
@@ -41,11 +43,13 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### D
 - **Data types** - Lesson 3, 4
 - **Define directive** - Lesson 8
+- **Dynamic Memory** - Lesson 12
 
 ### F
 - **File inclusion** - Lesson 1
 - **Format specifiers** - Lesson 2, 3, 4, 5
 - **For loops** - Lesson 7
+- **`free()`** - Lesson 12, 13
 - **Functions** - Lesson 1, 2, 4, 6, 9
 
 ### G
@@ -61,10 +65,13 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Local variables** - Lesson 3, 7
 - **Loops** - Lesson 6, 7
 
+### M 
+- **`malloc()`** - Lesson 12
+
 ### P
 - **Pass-by-value** - Lesson 3
 - **`printf()`** - Lesson 1, 3
-- **Pointers** - Lesson 8, 9, 10, 11
+- **Pointers** - Lesson 8, 9, 10, 11, 12, 13
 - **Prefix length string** - Lesson 11
 
 ### S
