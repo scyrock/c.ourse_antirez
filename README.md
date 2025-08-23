@@ -24,6 +24,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 11**: String Manipulation and Pointers Casting
 - **Lesson 12**: Dynamic Memory and Pre-Fixed Length String
 - **Lesson 13**: Memory Management and Pre-Fixed Length String Optimization
+- **Lesson 14**: Structures
 ---
 ## Analytic index
 ### A
@@ -78,6 +79,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`sizeof()`** - Lesson 4
 - **Static variables** - Lesson 3
 - **Strings** - Lesson 5, 11
+- **Structures** - Lesson 14
 - **Switch statements** - Lesson 7
 
 ### T
