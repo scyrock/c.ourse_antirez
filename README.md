@@ -26,6 +26,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 13**: Memory Management and Pre-Fixed Length String Optimization
 - **Lesson 14**: Structures
 - **Lesson 15**: File I/O and Linked Lists
+- **Lesson 16**: Structures and Reference Counting
+
 ---
 ## Analytic index
 ### A
@@ -71,6 +73,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Loops** - Lesson 6, 7
 
 ### M 
+- **Magic numbers** - Lesson 16
 - **`malloc()`** - Lesson 12
 
 ### P
@@ -83,7 +86,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`sizeof()`** - Lesson 4
 - **Static variables** - Lesson 3
 - **Strings** - Lesson 5, 11
-- **Structures** - Lesson 14, 15
+- **Structures** - Lesson 14, 15, 16
+= **Structures alignment** - Lesson 16
 - **Switch statements** - Lesson 7
 
 ### T
