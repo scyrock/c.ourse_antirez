@@ -24,6 +24,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 11**: String Manipulation and Pointers Casting
 - **Lesson 12**: Dynamic Memory and Pre-Fixed Length String
 - **Lesson 13**: Memory Management and Pre-Fixed Length String Optimization
+- **Lesson 14**: Structures
+- **Lesson 15**: File I/O and Linked Lists
 ---
 ## Analytic index
 ### A
@@ -39,6 +41,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Character variables** - Lesson 5
 - **Compilation process** - Lesson 1
 - **Casting** - Lesson 10, 11
+- **Command line arguments** - Lesson 15
 
 ### D
 - **Data types** - Lesson 3, 4
@@ -47,6 +50,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 
 ### F
 - **File inclusion** - Lesson 1
+- **File I/O operations** - Lesson 15
+- **`fopen() fgets() fclose()`** - Lesson 15
 - **Format specifiers** - Lesson 2, 3, 4, 5
 - **For loops** - Lesson 7
 - **`free()`** - Lesson 12, 13
@@ -78,6 +83,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`sizeof()`** - Lesson 4
 - **Static variables** - Lesson 3
 - **Strings** - Lesson 5, 11
+- **Structures** - Lesson 14, 15
 - **Switch statements** - Lesson 7
 
 ### T
