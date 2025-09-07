@@ -92,7 +92,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Static variables** - Lesson 3
 - **Strings** - Lesson 5, 11
 - **Structures** - Lesson 14, 15, 16
-= **Structures alignment** - Lesson 16
+- **Structures alignment** - Lesson 16
 - **Switch statements** - Lesson 7
 
 ### T
