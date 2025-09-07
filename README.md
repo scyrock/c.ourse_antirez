@@ -27,6 +27,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Lesson 14**: Structures
 - **Lesson 15**: File I/O and Linked Lists
 - **Lesson 16**: Structures and Reference Counting
+- **Lesson 17**: Structures Layout and Hexdump
 
 ---
 ## Analytic index
@@ -64,6 +65,9 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Global variables** - Lesson 3
 - **Goto statements** - Lesson 6, 7
 
+### H
+- **Hexdump** - Lesson 17
+
 ### I
 - **If statements** - Lesson 6, 7
 - **Integer types** - Lesson 3, 4
@@ -75,6 +79,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### M 
 - **Magic numbers** - Lesson 16
 - **`malloc()`** - Lesson 12
+- **`memcpy() memset()`** - Lesson 17
 
 ### P
 - **Pass-by-value** - Lesson 3
@@ -92,6 +97,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 
 ### T
 - **Terminal control** - Lesson 4
+- **Ternary operator** - Lesson 17
 - **Type conversion** - Lesson 5
 - **Type promotion** - Lesson 3
 
