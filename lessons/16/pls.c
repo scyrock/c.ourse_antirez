@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+/* Remarks from lesson 17:
+ * 1. Despite reference count being used in pls structure, it could be better to
+ *    delegate this information to a higher level of abstraction.
+ * 2. The maximum string length in this implementation is 4GB (the length is stored
+ *    by uint32_t). As usual this is a compromise and its implementation must be
+ *    evaluated as a function of the application.
+ * 3. The reference count is stored in a 32-bit variable. In some applications
+ *    this value could overflow. Specific solutions can be implemented to
+ *    avoid this problem, as an example a specific check can be used to avoid
+ *    that the reference count is updated when it reaches its maximum value.*/
+
 /* The struct is used for prefixed length strings.
  * The struct is well-aligned: the first two struct elements occupy 4 bytes each.
  * The last element is a pointer, this allows to assign it by malloc() when a pls
