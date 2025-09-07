@@ -11,23 +11,23 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ---
 
 ## Lessons index
-- **Lesson 1**: Introduction to C Programming and Compiler
-- **Lesson 2**: Introduction to C Programming
-- **Lesson 3**: Variable Scope and Data Types
-- **Lesson 4**: Functions and Data Types
-- **Lesson 5**: Arrays and Strings
-- **Lesson 6**: if, goto, while, recursion
-- **Lesson 7**: while, for and switch
-- **Lesson 8**: Game of Life
-- **Lesson 9**: Pointers
-- **Lesson 10**: Pointer Operations
-- **Lesson 11**: String Manipulation and Pointers Casting
-- **Lesson 12**: Dynamic Memory and Pre-Fixed Length String
-- **Lesson 13**: Memory Management and Pre-Fixed Length String Optimization
-- **Lesson 14**: Structures
-- **Lesson 15**: File I/O and Linked Lists
-- **Lesson 16**: Structures and Reference Counting
-- **Lesson 17**: Structures Layout and Hexdump
+- **[Lesson 1](lessons/01)**: Introduction to C Programming and Compiler
+- **[Lesson 2](lessons/02)**: Introduction to C Programming
+- **[Lesson 3](lessons/03)**: Variable Scope and Data Types
+- **[Lesson 4](lessons/04)**: Functions and Data Types
+- **[Lesson 5](lessons/05)**: Arrays and Strings
+- **[Lesson 6](lessons/06)**: if, goto, while, recursion
+- **[Lesson 7](lessons/07)**: while, for and switch
+- **[Lesson 8](lessons/08)**: Game of Life
+- **[Lesson 9](lessons/09)**: Pointers
+- **[Lesson 10](lessons/10)**: Pointer Operations
+- **[Lesson 11](lessons/11)**: String Manipulation and Pointers Casting
+- **[Lesson 12](lessons/12)**: Dynamic Memory and Pre-Fixed Length String
+- **[Lesson 13](lessons/13)**: Memory Management and Pre-Fixed Length String Optimization
+- **[Lesson 14](lessons/14)**: Structures
+- **[Lesson 15](lessons/15)**: File I/O and Linked Lists
+- **[Lesson 16](lessons/16)**: Structures and Reference Counting
+- **[Lesson 17](lessons/17)**: Structures Layout and Hexdump
 
 ---
 ## Analytic index
