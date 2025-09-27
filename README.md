@@ -29,6 +29,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 16](lessons/16)**: Structures and Reference Counting
 - **[Lesson 17](lessons/17)**: Structures Layout and Hexdump
 - **[Lesson 18](lessons/18)**: Type Definitions and File I/O Operations
+- **[Lesson 19](lessons/19)**:System Calls and Low-Level File Operations
 
 ---
 ## Analytic index
@@ -52,7 +53,12 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Define directive** - Lesson 8
 - **Dynamic Memory** - Lesson 12
 
+### E
+- **Error handling** - Lesson 19
+- **`errno`** - Lesson 19
+
 ### F
+- **File descriptors** - Lesson 19
 - **File inclusion** - Lesson 1
 - **File I/O operations** - Lesson 15
 - **`fopen() fgets() fclose()`** - Lesson 15
@@ -83,11 +89,18 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`malloc()`** - Lesson 12
 - **`memcpy() memset()`** - Lesson 17
 
+### O
+- **`open()`** - Lesson 19
+
 ### P
 - **Pass-by-value** - Lesson 3
+- **`perror()`** - Lesson 19
 - **`printf()`** - Lesson 1, 3
 - **Pointers** - Lesson 8, 9, 10, 11, 12, 13
 - **Prefix length string** - Lesson 11
+
+### R
+- **`read()`** - Lesson 19
 
 ### S
 - **`sizeof()`** - Lesson 4
@@ -96,6 +109,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Structures** - Lesson 14, 15, 16
 - **Structures alignment** - Lesson 16
 - **Switch statements** - Lesson 7
+- **System Calls** - Lesson 19
 
 ### T
 - **Terminal control** - Lesson 4
