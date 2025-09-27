@@ -28,6 +28,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 15](lessons/15)**: File I/O and Linked Lists
 - **[Lesson 16](lessons/16)**: Structures and Reference Counting
 - **[Lesson 17](lessons/17)**: Structures Layout and Hexdump
+- **[Lesson 18](lessons/18)**: Type Definitions and File I/O Operations
 
 ---
 ## Analytic index
@@ -57,6 +58,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`fopen() fgets() fclose()`** - Lesson 15
 - **Format specifiers** - Lesson 2, 3, 4, 5
 - **For loops** - Lesson 7
+- **`fread()`** - Lesson 18
 - **`free()`** - Lesson 12, 13
 - **Functions** - Lesson 1, 2, 4, 6, 9
 
@@ -99,6 +101,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Terminal control** - Lesson 4
 - **Ternary operator** - Lesson 17
 - **Type conversion** - Lesson 5
+- **`typedef`** - Lesson 18
 - **Type promotion** - Lesson 3
 
 ### V
