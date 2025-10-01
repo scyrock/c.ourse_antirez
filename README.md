@@ -29,7 +29,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 16](lessons/16)**: Structures and Reference Counting
 - **[Lesson 17](lessons/17)**: Structures Layout and Hexdump
 - **[Lesson 18](lessons/18)**: Type Definitions and File I/O Operations
-- **[Lesson 19](lessons/19)**:System Calls and Low-Level File Operations
+- **[Lesson 19](lessons/19)**: System Calls and Low-Level File Operations
+- **[Lesson 20](lessons/20)**: I/O Buffering and Memory Mapping
 
 ---
 ## Analytic index
@@ -41,6 +42,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### B
 - **Blocks** - Lesson 6, 7
 - **Break statements** - Lesson 6, 7
+- **Buffering** - Lesson 20
 
 ### C
 - **Character variables** - Lesson 5
@@ -58,9 +60,10 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`errno`** - Lesson 19
 
 ### F
+- **`fflush()`** - Lesson 20
 - **File descriptors** - Lesson 19
 - **File inclusion** - Lesson 1
-- **File I/O operations** - Lesson 15
+- **File I/O operations** - Lesson 15, 18, 19, 20
 - **`fopen() fgets() fclose()`** - Lesson 15
 - **Format specifiers** - Lesson 2, 3, 4, 5
 - **For loops** - Lesson 7
@@ -88,6 +91,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Magic numbers** - Lesson 16
 - **`malloc()`** - Lesson 12
 - **`memcpy() memset()`** - Lesson 17
+- **Memory mapping** - Lesson 20
+- **`mmap`** - Lesson 20
 
 ### O
 - **`open()`** - Lesson 19
@@ -104,6 +109,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 
 ### S
 - **`sizeof()`** - Lesson 4
+- **`sleep()`** - Lesson 20
 - **Static variables** - Lesson 3
 - **Strings** - Lesson 5, 11
 - **Structures** - Lesson 14, 15, 16
@@ -118,8 +124,11 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`typedef`** - Lesson 18
 - **Type promotion** - Lesson 3
 
+### U
+- - **`usleep()`** - Lesson 20
 ### V
 - **Variables** - Lesson 1, 2, 3
 
 ### W
 - **While loops** - Lesson 5, 6, 7
+- **`write()`** - Lesson 20
