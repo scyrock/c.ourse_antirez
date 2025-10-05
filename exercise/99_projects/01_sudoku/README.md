@@ -6,6 +6,11 @@ The solver identifies cells that have only one possible candidate and fills them
 
 The Sudoku input uses the notation from sudoku.coach (81-character string) which can be used for debugging and testing different puzzles.
 
+## Code
+- `**sudoku_naked_solver.c**`: solves the given sudoku scheme exploiting "naked digit" techniques
+- `**cellctrl.h**`: : collects functions to handle cell operations and cell candidates stored as binary values (e.g. set value, check candidate validity, etc.)
+- `**sudokuhl.h**`: collects sudoku helper functions for visualization.
+
 ## Example Output
 ```
 +---+---+---+
