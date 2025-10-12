@@ -31,6 +31,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 18](lessons/18)**: Type Definitions and File I/O Operations
 - **[Lesson 19](lessons/19)**: System Calls and Low-Level File Operations
 - **[Lesson 20](lessons/20)**: I/O Buffering and Memory Mapping
+- **[Lesson 21](lessons/21)**: Unions and Bitfields
 
 ---
 ## Analytic index
@@ -40,6 +41,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Assembly generation** - Lesson 1
 
 ### B
+- **Bitfield** - Lesson 21
 - **Blocks** - Lesson 6, 7
 - **Break statements** - Lesson 6, 7
 - **Buffering** - Lesson 20
@@ -125,7 +127,9 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Type promotion** - Lesson 3
 
 ### U
-- - **`usleep()`** - Lesson 20
+- **Unions** - Lesson 21
+- **`usleep()`** - Lesson 20
+
 ### V
 - **Variables** - Lesson 1, 2, 3
 
