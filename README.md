@@ -32,7 +32,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 19](lessons/19)**: System Calls and Low-Level File Operations
 - **[Lesson 20](lessons/20)**: I/O Buffering and Memory Mapping
 - **[Lesson 21](lessons/21)**: Unions and Bitfields
-
+- **[Lesson 22](lessons/22)**: Function Pointers and Callback Functions
 ---
 ## Analytic index
 ### A
@@ -47,6 +47,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Buffering** - Lesson 20
 
 ### C
+- **Callback functions** - Lesson 22
 - **Character variables** - Lesson 5
 - **Compilation process** - Lesson 1
 - **Casting** - Lesson 10, 11
@@ -72,6 +73,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`fread()`** - Lesson 18
 - **`free()`** - Lesson 12, 13
 - **Functions** - Lesson 1, 2, 4, 6, 9
+- **Function pointers** - Lesson 22
 
 ### G
 - **Game of life** - Lesson 8
@@ -105,6 +107,9 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`printf()`** - Lesson 1, 3
 - **Pointers** - Lesson 8, 9, 10, 11, 12, 13
 - **Prefix length string** - Lesson 11
+
+### Q
+- **`qsort()`** - Lesson 22
 
 ### R
 - **`read()`** - Lesson 19
