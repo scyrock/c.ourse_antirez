@@ -35,6 +35,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 22](lessons/22)**: Function Pointers and Callback Functions
 - **[Lesson 23](lessons/23)**: Toy Forth 01
 - **[Lesson 24](lessons/24)**: Toy Forth 02
+- **[Lesson 25](lessons/25)**: Toy Forth 03
 ---
 ## Analytic index
 ### A
@@ -118,6 +119,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### R
 - **`read()`** - Lesson 19
 - **`realloc()`** - Lesson 24
+- **Recursion** - Lesson 6, 25
 
 ### S
 - **`sizeof()`** - Lesson 4
@@ -132,7 +134,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### T
 - **Terminal control** - Lesson 4
 - **Ternary operator** - Lesson 17
-- **Toy Forth** - Lesson 23
+- **Toy Forth** - Lesson 23, 24, 25
 - **Type conversion** - Lesson 5
 - **`typedef`** - Lesson 18
 - **Type promotion** - Lesson 3
