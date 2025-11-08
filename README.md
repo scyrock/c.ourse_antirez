@@ -34,12 +34,14 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 21](lessons/21)**: Unions and Bitfields
 - **[Lesson 22](lessons/22)**: Function Pointers and Callback Functions
 - **[Lesson 23](lessons/23)**: Toy Forth 01
+- **[Lesson 24](lessons/24)**: Toy Forth 02
 ---
 ## Analytic index
 ### A
 - **Arrays** - Lesson 5, 7
 - **ASCII values** - Lesson 5, 11
 - **Assembly generation** - Lesson 1
+- **`atoi()`** - Lesson 24
 
 ### B
 - **Bitfield** - Lesson 21
@@ -73,6 +75,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **For loops** - Lesson 7
 - **`fread()`** - Lesson 18
 - **`free()`** - Lesson 12, 13
+- **`fseek()`** - Lesson 24
 - **Functions** - Lesson 1, 2, 4, 6, 9
 - **Function pointers** - Lesson 22
 
@@ -95,7 +98,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### M 
 - **Magic numbers** - Lesson 16
 - **`malloc()`** - Lesson 12
-- **`memcpy() memset()`** - Lesson 17
+- **`memcpy() memset()`** - Lesson 17, 24
 - **Memory mapping** - Lesson 20
 - **`mmap`** - Lesson 20
 
@@ -114,6 +117,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 
 ### R
 - **`read()`** - Lesson 19
+- **`realloc()`** - Lesson 24
 
 ### S
 - **`sizeof()`** - Lesson 4
