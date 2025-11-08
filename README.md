@@ -34,7 +34,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 21](lessons/21)**: Unions and Bitfields
 - **[Lesson 22](lessons/22)**: Function Pointers and Callback Functions
 - **[Lesson 23](lessons/23)**: Toy Forth 01
-- **[Lesson 24](lessons/24)**: Toy Forth 01
+- **[Lesson 24](lessons/24)**: Toy Forth 02
 ---
 ## Analytic index
 ### A

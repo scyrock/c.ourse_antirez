@@ -1,4 +1,4 @@
-# Lesson 24: Interpreter Lexing: Program Loading and Number Tokenization [:video_camera:](https://youtu.be/NEW_VIDEO_LINK)
+# Lesson 24: Toy Forth 02 [:video_camera:](https://youtu.be/-QxrmHo-V7Y?si=7NtrgEUQLgtDr8sl)
 
 This lesson advances the Toy Forth interpreter development, demonstrating essential file I/O for reading the program source, dynamic array management for parsing, and fundamental lexical analysis (lexing) of number tokens.
 
