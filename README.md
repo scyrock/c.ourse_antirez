@@ -8,6 +8,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - [VIM Adventures: Learn VIM while playing a game](https://vim-adventures.com/)
 - [vimtutor](https://vimschool.netlify.app/introduction/vimtutor/)
 
+
 ---
 
 ## Lessons index
@@ -36,12 +37,14 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 23](lessons/23)**: Toy Forth 01
 - **[Lesson 24](lessons/24)**: Toy Forth 02
 - **[Lesson 25](lessons/25)**: Toy Forth 03
+- **[Lesson 26](lessons/26)**: Toy Forth 03
 ---
 ## Analytic index
 ### A
 - **Arrays** - Lesson 5, 7
 - **ASCII values** - Lesson 5, 11
 - **Assembly generation** - Lesson 1
+- **`assert`** - Lesson 26
 - **`atoi()`** - Lesson 24
 
 ### B
@@ -120,6 +123,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`read()`** - Lesson 19
 - **`realloc()`** - Lesson 24
 - **Recursion** - Lesson 6, 25
+- **Reference Counting** - Lesson 16,26
 
 ### S
 - **`sizeof()`** - Lesson 4
