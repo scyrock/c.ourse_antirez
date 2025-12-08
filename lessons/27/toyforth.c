@@ -43,15 +43,17 @@ typedef struct tfparser{
 
 /* Function table entry: each entry represents a function/word and its
  * implementation. */
-struct FunctionTableEntry{
+struct tfctx;
+typedef struct FunctionTableEntry{
     tfobj *name;
-    void (*callback) (tfctx *ctx, tfobj *name); // Pointer to native C function
+    // Pointer to native C function
+    void (*callback) (struct tfctx *ctx, tfobj *name);
     // Used to store user-defined implementation function as a tf list
-    tfobj *user_list;
-};
+    tfobj *user_func;
+} tffuncentry;
 
 struct FunctionTable{
-    struct FunctionTableEntry **func_table;
+    tffuncentry **func_table;
     size_t func_count;
 };
 
@@ -63,6 +65,9 @@ typedef struct tfctx{
     struct FunctionTable functable;
 } tfctx;
 
+/*=========================== Functions prototypes ===========================*/
+void retain(tfobj *o);
+void release(tfobj *o);
 
 /*=========================== Allocation wrappers ============================*/
 
@@ -96,21 +101,6 @@ tfobj *createObject(int type){
     return  o;
 }
 
-/* Initializes string `tfobj`.*/
-tfobj *createStringObject(char *s, size_t len){
-    tfobj *o = createObject(TFOBJ_TYPE_STR);
-    o->str.ptr = xmalloc(len+1);    // Allocate the memory.
-    o->str.len = len;
-    memcpy(o->str.ptr, s, len);     // Copy the string in the tfobj
-    o->str.ptr[len] = 0;
-    return  o;
-}
-/* Initializes symbol `tfobj`.*/
-tfobj *createSymbolObject(char *s, size_t len){
-    tfobj *o = createStringObject(s,len);
-    o->type = TFOBJ_TYPE_SYMBOL;
-    return o;
-}
 /* Initializes int `tfobj`.*/
 tfobj *createIntObject(int i){
     tfobj *o = createObject(TFOBJ_TYPE_INT);
@@ -187,7 +177,52 @@ void printObject(tfobj *o){
     }
 }
 
-/*=================================== List object ============================*/
+/*================================= String object ============================*/
+
+/* Initializes string `tfobj`.*/
+tfobj *createStringObject(char *s, size_t len){
+    tfobj *o = createObject(TFOBJ_TYPE_STR);
+    o->str.ptr = xmalloc(len+1);    // Allocate the memory.
+    o->str.len = len;
+    memcpy(o->str.ptr, s, len);     // Copy the string in the tfobj
+    o->str.ptr[len] = 0;
+    return  o;
+}
+
+/* Initializes symbol `tfobj`.*/
+tfobj *createSymbolObject(char *s, size_t len){
+    tfobj *o = createStringObject(s,len);
+    o->type = TFOBJ_TYPE_SYMBOL;
+    return o;
+}
+
+/* Compare two string tfobj `a` and `b` and returns:
+ * 0 if `a`==`b`
+ * 1 if `a`>`b`
+ *-1 if `a`<`b`*/
+int compareStringObject(tfobj *a, tfobj *b){
+    // Find minimum str len by ternary operator
+    size_t minlen = a->str.len < b->str.len ? a->str.len : b->str.len;
+
+    /* The memcmp() function returns an  integer less than, equal to, or greater
+     * than zero if  the first n bytes of s1 is found, respectively, to be less
+     * than, to match, or be greater than the first n bytes of s2. */
+    int cmp = memcmp(a->str.ptr, b->str.ptr, minlen);
+
+    // If the first `minlen` bytes are equal
+    if(cmp==0){
+        // AND they have the same length
+        if(a->str.len == b->str.len) return 0;
+        // AND `a` is shorter than `b`
+        else if (a->str.len > b->str.len) return 1;
+        else return -1;
+    }else{
+        if(cmp<0) return -1;
+        else return 1;
+    }
+}
+
+/*================================== List object =============================*/
 
 /* Initializes an empty list `tfobj`.*/
 tfobj *createListObject(void){
@@ -203,7 +238,7 @@ void listPush(tfobj *l, tfobj *ele){
     /* A new memory allocation is performed, with a dimension equal to the actual
      * size plus one (to have space for the new element). Note: sizeof(tfobj *)
      * is used because 'ele' is an array of pointers to tfobj.*/
-    l->list.ele = xrealloc(l->list.ele, sizeof(tfobj)*(l->list.len+1));
+    l->list.ele = xrealloc(l->list.ele, sizeof(tfobj*)*(l->list.len+1));
 
     l->list.ele[l->list.len] = ele;     // Append the element
     l->list.len++;                      // Update the list length
@@ -249,7 +284,7 @@ int is_symbol_char(int c){
     if(isalpha(c)) return 1;
     /* The  strchr() function returns a pointer to the first occurrence of the
      * character c in the string s.
-     * If the function doesn't return NULL, it means that c appears in symchars.*/
+     * If the function doesn't return NULL, means that c appears in symchars.*/
     else if(strchr(symchars,c)!=NULL) return 1;
     else return 0;
 
@@ -303,30 +338,118 @@ tfobj *compile(char *prg){
     return parsed;
 }
 
+/*======================= Basic standard libraries ===========================*/
+
+// Prototype functions used in basicMathFunction. (Currently unimplemented)
+
+tfobj *ctxStackPop(tfctx *ctx, int tf_type);
+int ctxCheckStackMinLen(tfctx *ctx, int ctx_len);
+void ctxStackPush(tfctx *ctx, tfobj *tfobf);
+
+void basicMathFunction(tfctx *ctx, tfobj *name){
+    // NOTE: Requires implementation of stack manipulation functions (ctxStackPop, etc.)
+    if(ctxCheckStackMinLen(ctx,2)) return;
+    tfobj *b = ctxStackPop(ctx,TFOBJ_TYPE_INT);
+    tfobj *a = ctxStackPop(ctx,TFOBJ_TYPE_INT);
+    if(a==NULL || b==NULL) return;
+
+    int result = 0;
+    switch(name->str.ptr[0]) {
+        case '+': result = a->i+b->i; break;
+        case '-': result = a->i-b->i; break;
+        case '*': result = a->i*b->i; break;
+    };
+
+    ctxStackPush(ctx, createIntObject(result));
+}
 
 /*======================== Execution and context =============================*/
+
+/* Search for a function by name in the context's function table. */
+tffuncentry *getFunctionByName(tfctx *ctx,tfobj *name){
+    for(size_t j=0; j<ctx->functable.func_count; j++){
+        tffuncentry *fe=ctx->functable.func_table[j];
+        // Check if the function `name` already exists in the context
+        if(compareStringObject(fe->name, name)==0){
+            return fe;
+        }
+    }
+    // Return NULL if the function `name` doesn't exist
+    return NULL;
+}
+
+/* Add a new function entry to the context's function table. */
+tffuncentry *registerFunction(tfctx *ctx, tfobj *name){
+    // Dynamically reallocate memory for the new function table entry
+    ctx->functable.func_table =
+        xrealloc(ctx->functable.func_table,
+                 sizeof(tffuncentry*)*(ctx->functable.func_count+1));
+    tffuncentry *fe = xmalloc(sizeof(tffuncentry));
+
+    // Add the new entry and increment the count
+    ctx->functable.func_table[ctx->functable.func_count] = fe;
+    ctx->functable.func_count++;
+
+    // Initialize the function entry
+    fe->name = name;
+    // Retain the name object as the function table now holds a reference
+    retain(name);
+    fe->callback = NULL;
+    fe->user_func = NULL;
+    return fe;
+}
+
+/* Register a new C-implemented function given the `name` in the context `ctx`.
+ * If a function with the same `name` already exists, its C implementation is overwritten. */
+void registerCFunction(tfctx *ctx, char *name,
+                       void (*callback) (tfctx *ctx, tfobj *name)){
+    tffuncentry *fe;
+    tfobj *oname = createStringObject(name, strlen(name));
+    fe = getFunctionByName(ctx,oname);      // Check if `name` exists
+
+    if(fe){
+        // Existing function: overwrite C callback
+        if(fe->user_func){
+            // Release previous user-defined function if present
+            release(fe->user_func);
+            fe->user_func = NULL;
+        }
+        fe->callback = callback;
+    }else{
+        // New function: register it
+        fe = registerFunction(ctx,oname);
+        fe->callback = callback;
+    }
+
+    /* The oname object is either registered (retained) or discarded, so we
+     * release the local copy. */
+    release(oname);
+}
 
 tfctx *createContext(void){
     tfctx *ctx = xmalloc(sizeof(*ctx));
     ctx->stack = createListObject();
     ctx->functable.func_table = NULL;
     ctx->functable.func_count = 0;
-    // TODO:
-    // registerFunction(ctx,"+",basicMathFunctions);
+
+    // registerCFunction(ctx, "+", basicMathFunction);
     return ctx;
 }
 
+
 /* Try to apply the function `fcn` to the context `ctx` stack.
- * Return 0 if the exctution is properly solved, 1 otherwise. */
-// TODO:
-int callSymbol(tfctx *ctx, tfobj *fcn){
-    return -8;
+ * Return 0 if the execution is properly solved and executed , 1 otherwise. */
+// TODO: Needs full implementation to call fe->callback
+int callSymbol(tfctx *ctx, tfobj *word){
+    tffuncentry *fe = getFunctionByName(ctx,word);
+    if(fe==NULL) return 1;
+    return 0;
 }
 
 /* Execute the Toy Forth program stored in the list `prg`, using `ctx` context.*/
 void exec(tfctx *ctx,tfobj *prg){
-    /* If expression is  false  (i.e.,  compares equal  to zero), assert() 
-     * prints an error message to standard error and  terminates the program 
+    /* If expression is  false  (i.e.,  compares equal  to zero), assert()
+     * prints an error message to standard error and  terminates the program
      * by calling abort(3). */
     // Continue only if the tfobj is a list
     assert(prg->type == TFOBJ_TYPE_LIST);
@@ -362,8 +485,8 @@ int main(int argc, char **argv){
         perror("Fail to open toyforth program");
         return 1;
     }
-    /* The fseek() function sets the file position indicator for the stream pointed
-     * to by stream. */
+    /* The fseek() function sets the file position indicator for the stream
+     * pointed to by stream. */
     // Go to the file position 0 starting from the end of the file.
     fseek(fp,0,SEEK_END);
     /* The  ftell() function obtains the current value of the file position
@@ -387,7 +510,7 @@ int main(int argc, char **argv){
     tfctx *ctx = createContext();       // Init execution context
     exec(ctx, prg);
 
-    printf("Conext stack content:");
+    printf("Context stack content:");
     printObject(ctx->stack);
     printf("\n");
 

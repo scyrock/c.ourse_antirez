@@ -37,7 +37,8 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 23](lessons/23)**: Toy Forth 01
 - **[Lesson 24](lessons/24)**: Toy Forth 02
 - **[Lesson 25](lessons/25)**: Toy Forth 03
-- **[Lesson 26](lessons/26)**: Toy Forth 03
+- **[Lesson 26](lessons/26)**: Toy Forth 04
+- **[Lesson 27](lessons/27)**: Toy Forth 05
 ---
 ## Analytic index
 ### A
@@ -102,6 +103,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### M 
 - **Magic numbers** - Lesson 16
 - **`malloc()`** - Lesson 12
+- **`memcmp()`** - Lesson 27
 - **`memcpy() memset()`** - Lesson 17, 24
 - **Memory mapping** - Lesson 20
 - **`mmap`** - Lesson 20
