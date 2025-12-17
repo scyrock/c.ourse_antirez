@@ -39,6 +39,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 25](lessons/25)**: Toy Forth 03
 - **[Lesson 26](lessons/26)**: Toy Forth 04
 - **[Lesson 27](lessons/27)**: Toy Forth 05
+- **[Lesson 28](lessons/28)**: Variadic Functions
 ---
 ## Analytic index
 ### A
@@ -87,7 +88,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### G
 - **Game of life** - Lesson 8
 - **Global variables** - Lesson 3
-- **Goto statements** - Lesson 6, 7
+- **Goto statements** - Lesson 6, 7, 28
 
 ### H
 - **Hexdump** - Lesson 17
@@ -140,6 +141,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 ### T
 - **Terminal control** - Lesson 4
 - **Ternary operator** - Lesson 17
+- **`tolower()`** - Lesson 28
 - **Toy Forth** - Lesson 23, 24, 25
 - **Type conversion** - Lesson 5
 - **`typedef`** - Lesson 18
@@ -150,7 +152,10 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **`usleep()`** - Lesson 20
 
 ### V
+- **`va_list`**, **`va_start()`**, **`va_arg()`**, **`va_end()`** - Lesson 28
 - **Variables** - Lesson 1, 2, 3
+- **Variadic functions** - Lesson 28
+- **`vprintf()`**, **`vsnprintf()`** - Lesson 28
 
 ### W
 - **While loops** - Lesson 5, 6, 7
