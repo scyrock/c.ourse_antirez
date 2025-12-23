@@ -1,18 +1,19 @@
 #include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
 
 #define SUDOKU_L 3
 #define SUDOKU_S 9
 #define SUDOKU_DIM SUDOKU_S*SUDOKU_S
-#define ANSI_COLOR_RED      "\x1b[31m"
-#define ANSI_COLOR_RESET    "\x1b[0m"
-
 #define SD_OK 1
 #define SD_ERR 0
+
+#define REFRESH_TIME_US 5000
+#define PADDING_SPACES 16
+#define ANSI_COLOR_RED      "\x1b[31m"
+#define ANSI_COLOR_RESET    "\x1b[0m"
+#define CLEAN_SCREEN        "\x1b[H\x1b[2J\x1b[3J"
 
 #include "cellctrl.h"
 #include "sudokuhl.h"
@@ -34,8 +35,10 @@ void init_sudoku(sd_grid_ptr s){
     // char sudoku_in[SUDOKU_DIM+1] = "000031000040702009000090002000000600090008010120070090700000900006400005250000000";
     // char sudoku_in[SUDOKU_DIM+1]= "001000008800009001500030000900008000070200000000750002000000097400076030030000040";
     char sudoku_in[SUDOKU_DIM+1]= "009000050300000801000062003600100700000070006003040100200000480005003000001090000";
-    printf("The solved sudoku is: \nhttps://sudoku.coach/en/play/%s\n\n",
-           sudoku_in);
+    printf("\x1b[H\x1b[2J\x1b[3J");
+    printf("%sThe solved sudoku is: \nhttps://sudoku.coach/en/play/%s\n\n"
+           "Press enter to continue...", CLEAN_SCREEN, sudoku_in);
+    while(getchar() != '\n');
 
     int row = 0;
     int col = 0;
@@ -54,8 +57,10 @@ void init_sudoku(sd_grid_ptr s){
 void display_sd(sd_grid_ptr s){
     int row = 0;
     int col = 0;
+    printf("%*s", PADDING_SPACES, "");
     separation_line();
     for(row=0; row<SUDOKU_S; row++){
+        printf("%*s", PADDING_SPACES, "");
         printf("|");
         for(col=0; col<SUDOKU_S; col++){
             if((*s)[row][col].value != 0){
@@ -71,39 +76,41 @@ void display_sd(sd_grid_ptr s){
             if((col+1)%SUDOKU_L == 0) printf("|");
         }
         printf("\n");
-        if((row+1)%SUDOKU_L == 0) separation_line();
+        if((row+1)%SUDOKU_L == 0){
+            printf("%*s", PADDING_SPACES, "");
+            separation_line();
+        }
     }
 }
 
 /* ------------------------------ Helpers ----------------------------------- */
 
 /* Given a cell and a candidate evaluate if the candidate is valid. */
-int valid_cand(const sd_grid_ptr s, int row, int col, int num){
+int valid_cand(const sd_grid_ptr s, int row_sd, int col_sd, int val_sd){
     // Check row
     for(int i=0; i<SUDOKU_S; i++){
-        if ((*s)[row][i].value==num) return 0;
+        if ((*s)[row_sd][i].value==val_sd) return SD_ERR;
     }
 
     // Check column 
     for(int i=0; i<SUDOKU_S; i++){
-        if ((*s)[i][col].value==num) return 0;
+        if ((*s)[i][col_sd].value==val_sd) return SD_ERR;
     }
 
     // Check square
-    int col0 = (col/SUDOKU_L)*SUDOKU_L;
-    int row0 = (row/SUDOKU_L)*SUDOKU_L;
+    int col0 = (col_sd/SUDOKU_L)*SUDOKU_L;
+    int row0 = (row_sd/SUDOKU_L)*SUDOKU_L;
     for(int i=0; i<SUDOKU_L; i++){
         for(int j=0; j<SUDOKU_L; j++){
-            if((*s)[row0+i][col0+j].value==num) return 0;
+            if((*s)[row0+i][col0+j].value==val_sd) return SD_ERR;
         }
     }
 
-    return 1;
+    return SD_OK;
 }
 
-
-/* Evaluate the next not given cell. Returns -1 if the actual scheme is ended.
- * NOTE: to evalute the rist cell use col = -1. */
+/* Evaluate the next not given cell.
+ * Returns SD_ERR if the actual scheme is ended. */
 int next_cell(const sd_grid_ptr s, int *row, int *col){
     while(1){
         (*col)++;  // go to next column
@@ -125,8 +132,8 @@ int next_cell(const sd_grid_ptr s, int *row, int *col){
     }
 }
 
-/* Evaluate the previous not given cell. Returns -1 if the actual 
- * scheme is ended */
+/* Evaluate the previous not given cell.
+ * Returns SD_ERR if the actual scheme is ended. */
 int prev_cell(const sd_grid_ptr s, int *row, int *col){
     while(1){
         (*col)--;  // go to prev column
@@ -143,56 +150,56 @@ int prev_cell(const sd_grid_ptr s, int *row, int *col){
     }
 }
 
-int next_cand(const sd_grid_ptr s, const int *row, const int *col, int *val){
+/* Return the next allowed value in poition [row_sd col_sd] after `val_sd`.
+ * If no allowed values are present, the function return SD_ERR. */
+int next_cand(const sd_grid_ptr s, const int *row_sd,
+              const int *col_sd, int *val_sd){
     while (1) {
-        (*val)++;
-        if(*val>SUDOKU_S) return SD_ERR;    // check if value is over the bound
+        (*val_sd)++;
+        if(*val_sd>SUDOKU_S) return SD_ERR;    // check if value is over the bound
         // if the cadidate is valid for the cell, return
-        if(valid_cand(s, *row, *col, *val)) return SD_OK;
+        if(valid_cand(s, *row_sd, *col_sd, *val_sd)) return SD_OK;
     }
 }
 
-int completed(const sd_grid_ptr s, const int *row, const int *col){
-    int row_in = *row;
-    int col_in = *col;
-    if(!(next_cell(s, &row_in, &col_in)) && (*s)[*row][*col].value!=0)
-        return SD_OK;
-    return SD_ERR;
-}
 /* ------------------------------ Sudoku solve ------------------------------ */
 
+/* Solve the sudoku by backtracking algorithm. */
 int solve(sd_grid_ptr s){
     int row = 0;
     int col = -1;
-    int row_in, col_in;
     int iteration = 0;
     int val = 0;
-
     next_cell(s, &row, &col);
 
     while(1){
-        usleep(50000);
-        row_in = row;
-        col_in = col;
+        usleep(REFRESH_TIME_US);
         iteration++;
-        printf("Iteration %d - [Row: %d Column: %d Value: %d]\n",
-               iteration, row, col, val);
+        printf("%sIteration %d - [Row: %d Column: %d Value: %d]\n\n",
+               CLEAN_SCREEN, iteration, row, col, val%(SUDOKU_S+1));
         val = (*s)[row][col].value;
         display_sd(s);
+
+        // Check if a candidate can be palced in the current position.
         if(next_cand(s, &row, &col, &val)){
+            // Place the candidate
             (*s)[row][col].value = val;
-            next_cell(s, &row, &col);
+            if(next_cell(s, &row, &col)==SD_ERR){
+                printf("%s %*s>> SOLVED <<\n", CLEAN_SCREEN, PADDING_SPACES, "");
+                display_sd(s);
+                return SD_OK;
+            }
         }else{
-            (*s)[row_in][col_in].value = 0; 
-            prev_cell(s, &row, &col);
+            // Move back
+            (*s)[row][col].value = 0; 
+            if(prev_cell(s, &row, &col)==SD_ERR) return SD_ERR;
         }
-        if(completed(s, &row, &col)) return SD_OK;
     }
 }
+
 int main(void){ 
     sd_grid sudoku;
     init_sudoku(&sudoku);
     solve(&sudoku);
-    display_sd(&sudoku);
     return 0;
 }
