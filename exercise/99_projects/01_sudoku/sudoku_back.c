@@ -1,49 +1,57 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #define SUDOKU_L 3
-#define SUDOKU_S 9 
+#define SUDOKU_S 9
 #define SUDOKU_DIM SUDOKU_S*SUDOKU_S
 #define ANSI_COLOR_RED      "\x1b[31m"
 #define ANSI_COLOR_RESET    "\x1b[0m"
 
+#define SD_OK 1
+#define SD_ERR 0
+
 #include "cellctrl.h"
 #include "sudokuhl.h"
 
-struct bt_node{
-    struct bt_node *prev_node;
-    sudoku_grid grid;
-    int row_g;
-    int col_g;
-    int val_g;
-};
+typedef struct{
+    int value;          // Cell assigned value (0 if unknown)
+    bool given ;        // True if the value is given
+}sd_cell;
 
-// >>>>> Initialization <<<<<
+typedef sd_cell sd_grid[SUDOKU_S][SUDOKU_S];
+typedef sd_grid* sd_grid_ptr;
+
+/* ---------------------------- Initialization ------------------------------ */
 
 /* Initialize sudoku structure, using standard notation.*/
-void init_sudoku(sudoku_grid_ptr s){
-    
-    /* Solvable sudoku */
-    //char sudoku_in[SUDOKU_DIM+1] = "400060001020038000310004050500000000038000709000000003000010875006903000700020000";   
-    char sudoku_in[SUDOKU_DIM+1] = "200900007805147002730208100679301500001589206580670031150402098427000605960015400"; 
+void init_sudoku(sd_grid_ptr s){
+    //char sudoku_in[SUDOKU_DIM+1] = "400060001020038000310004050500000000038000709000000003000010875006903000700020000";
+    // char sudoku_in[SUDOKU_DIM+1] = "200900007805147002730208100679301500001589206580670031150402098427000605960015400";
     // char sudoku_in[SUDOKU_DIM+1] = "000031000040702009000090002000000600090008010120070090700000900006400005250000000";
-    
-    /* Unsolvable sudku */
     // char sudoku_in[SUDOKU_DIM+1]= "001000008800009001500030000900008000070200000000750002000000097400076030030000040";
-    printf("The solved sudoku is: \nhttps://sudoku.coach/en/play/%s\n\n", sudoku_in); 
+    char sudoku_in[SUDOKU_DIM+1]= "009000050300000801000062003600100700000070006003040100200000480005003000001090000";
+    printf("The solved sudoku is: \nhttps://sudoku.coach/en/play/%s\n\n",
+           sudoku_in);
+
     int row = 0;
     int col = 0;
     for(int i=0; i<SUDOKU_DIM; i++){
         row = i/SUDOKU_S;
         col = i%SUDOKU_S;
         (*s)[row][col].value = (int)sudoku_in[i]-'0';
+        if((*s)[row][col].value==0) (*s)[row][col].given = false;
+        else (*s)[row][col].given = true;
     }
 }
 
+/* ------------------------------- Display --------------------------------- */
+
 /* Display the sudoku scheme */
-void display_sudoku_v2(sudoku_grid_ptr s, sudoku_grid_ptr root){
+void display_sd(sd_grid_ptr s){
     int row = 0;
     int col = 0;
     separation_line();
@@ -51,8 +59,9 @@ void display_sudoku_v2(sudoku_grid_ptr s, sudoku_grid_ptr root){
         printf("|");
         for(col=0; col<SUDOKU_S; col++){
             if((*s)[row][col].value != 0){
-                if((*root)[row][col].value != 0){
-                    printf("%s%d%s", ANSI_COLOR_RED,(*s)[row][col].value, ANSI_COLOR_RESET);
+                if((*s)[row][col].given != 0){
+                    printf("%s%d%s", ANSI_COLOR_RED,(*s)[row][col].value,
+                           ANSI_COLOR_RESET);
                 } else{
                     printf("%d",(*s)[row][col].value);
                 }
@@ -65,185 +74,125 @@ void display_sudoku_v2(sudoku_grid_ptr s, sudoku_grid_ptr root){
         if((row+1)%SUDOKU_L == 0) separation_line();
     }
 }
+
+/* ------------------------------ Helpers ----------------------------------- */
+
 /* Given a cell and a candidate evaluate if the candidate is valid. */
-int valid_cand(sudoku_grid_ptr s, int row, int col, int num){ 
+int valid_cand(const sd_grid_ptr s, int row, int col, int num){
     // Check row
     for(int i=0; i<SUDOKU_S; i++){
         if ((*s)[row][i].value==num) return 0;
     }
+
     // Check column 
     for(int i=0; i<SUDOKU_S; i++){
         if ((*s)[i][col].value==num) return 0;
     }
+
     // Check square
     int col0 = (col/SUDOKU_L)*SUDOKU_L;
     int row0 = (row/SUDOKU_L)*SUDOKU_L;
-    
     for(int i=0; i<SUDOKU_L; i++){
         for(int j=0; j<SUDOKU_L; j++){
             if((*s)[row0+i][col0+j].value==num) return 0;
         }
     }
+
     return 1;
 }
 
-/* Evaluate the valid candidates of the sudoku.*/
-void candidate(sudoku_grid_ptr s){
-    for(int row=0; row<SUDOKU_S; row++){
-        for(int col=0; col<SUDOKU_S; col++){
-            (*s)[row][col].candidate = 0;
-            if((*s)[row][col].value == 0){
-                for(int i=0; i<=SUDOKU_S; i++){
-                    if(valid_cand(s,row,col,i)){
-                        set_cand(s,row,col,i);
-                    }
-                }
-            }
+
+/* Evaluate the next not given cell. Returns -1 if the actual scheme is ended.
+ * NOTE: to evalute the rist cell use col = -1. */
+int next_cell(const sd_grid_ptr s, int *row, int *col){
+    while(1){
+        (*col)++;  // go to next column
+        // if out of column number move to the next row
+        if(*col>=SUDOKU_S){
+            *col = 0;
+            (*row)++;
         }
+        // Out of the grid
+        if(*row>=SUDOKU_S) return SD_ERR;
+
+        /* If the current cell value is not given and is different from zero,
+         * the current sudoku state is inconsistent. */
+        assert(!((*s)[*row][*col].given==false && (*s)[*row][*col].value!=0));
+
+        // If the current cell value is not given and is zero, return it.
+        if((*s)[*row][*col].given==false &&
+            (*s)[*row][*col].value==0) return SD_OK;
     }
 }
 
-/* Update candidates after a new value is assigned to a cell. */
-void release(sudoku_grid_ptr s, int row, int col, int num){
-    // Release row
-    for(int i=0; i<SUDOKU_S; i++){
-        if ((*s)[row][i].value==0) unset_cand(s,row,i,num);
-    }
-    // Check column 
-    for(int i=0; i<SUDOKU_S; i++){
-        if ((*s)[i][col].value==0) unset_cand(s,i,col,num);
-    }
-    // Check square
-    int col0 = (col/SUDOKU_L)*SUDOKU_L;
-    int row0 = (row/SUDOKU_L)*SUDOKU_L;
-    for(int i=0; i<SUDOKU_L; i++){
-        for(int j=0; j<SUDOKU_L; j++){
-            if((*s)[row0+i][col0+j].value==0) unset_cand(s,row0+i,col0+j,num);
+/* Evaluate the previous not given cell. Returns -1 if the actual 
+ * scheme is ended */
+int prev_cell(const sd_grid_ptr s, int *row, int *col){
+    while(1){
+        (*col)--;  // go to prev column
+        // if out of column number move to the previous row
+        if(*col<0){
+            *col = SUDOKU_S-1;
+            (*row)--;
         }
+        // Out of the grid
+        if(*row<0) return SD_ERR;
+
+        // If the current cell value is not given, return it.
+        if((*s)[*row][*col].given==false) return SD_OK;
     }
 }
 
-struct bt_node *init_bt_node(struct bt_node *prev_bt){
-    struct bt_node *new_bt = malloc(sizeof(struct bt_node));
-    int row_g = prev_bt->row_g;
-    int col_g = prev_bt->col_g;
-    int val_g = prev_bt->val_g;
-    
-    memcpy(new_bt, prev_bt, sizeof(struct bt_node));
-    
-    new_bt->grid[row_g][col_g].value = val_g;
-    printf("\n >>> APPEND: node in position [%d,%d] has value: %d\n",
-           row_g, col_g, new_bt->grid[row_g][col_g].value);
-    new_bt->grid[row_g][col_g].candidate = 0;
-    
-    release(&(new_bt->grid), row_g, col_g, val_g);
-    // Initialize node guesses
-    new_bt->row_g = 0;
-    new_bt->col_g = 0;
-    new_bt->val_g = 0;
-    new_bt->prev_node = prev_bt;
-    
-    return new_bt;
+int next_cand(const sd_grid_ptr s, const int *row, const int *col, int *val){
+    while (1) {
+        (*val)++;
+        if(*val>SUDOKU_S) return SD_ERR;    // check if value is over the bound
+        // if the cadidate is valid for the cell, return
+        if(valid_cand(s, *row, *col, *val)) return SD_OK;
+    }
 }
-/* A new memory adress must be returned with the new location.*/
-struct bt_node *pop_node_validity(struct bt_node *in_node, struct bt_node *root){
-    // printf("IN PTR: %p\n", in_node);
-    struct bt_node *out_node = in_node;
-    for(int row=0; row<SUDOKU_S; row++){
-        for(int col=0; col<SUDOKU_S; col++){
-            if(in_node->grid[row][col].value==0 && in_node->grid[row][col].candidate==0){
-                out_node = in_node->prev_node;
-                printf("Free on %p\n", in_node);
-                free(in_node);
-                printf("\n >>>POP   : node in position [%d,%d] has value: %d\n", 
-                        out_node->row_g, out_node->col_g, out_node->grid[out_node->row_g][out_node->col_g].value);
-                int row_g = out_node->row_g;
-                int col_g = out_node->col_g;
-                int val_g = out_node->val_g;
-                unset_cand(&(out_node->grid), row_g, col_g, val_g);
-                out_node->val_g++;
-                return out_node;
-            }
+
+int completed(const sd_grid_ptr s, const int *row, const int *col){
+    int row_in = *row;
+    int col_in = *col;
+    if(!(next_cell(s, &row_in, &col_in)) && (*s)[*row][*col].value!=0)
+        return SD_OK;
+    return SD_ERR;
+}
+/* ------------------------------ Sudoku solve ------------------------------ */
+
+int solve(sd_grid_ptr s){
+    int row = 0;
+    int col = -1;
+    int row_in, col_in;
+    int iteration = 0;
+    int val = 0;
+
+    next_cell(s, &row, &col);
+
+    while(1){
+        usleep(50000);
+        row_in = row;
+        col_in = col;
+        iteration++;
+        printf("Iteration %d - [Row: %d Column: %d Value: %d]\n",
+               iteration, row, col, val);
+        val = (*s)[row][col].value;
+        display_sd(s);
+        if(next_cand(s, &row, &col, &val)){
+            (*s)[row][col].value = val;
+            next_cell(s, &row, &col);
+        }else{
+            (*s)[row_in][col_in].value = 0; 
+            prev_cell(s, &row, &col);
         }
+        if(completed(s, &row, &col)) return SD_OK;
     }
-    // printf("OUT PTR: %p\n", out_node);
-    return out_node ;
 }
-
-
-void bt_solver(struct bt_node *root, struct bt_node *node){
-    int row_g = node->row_g;
-    int col_g = node->col_g;
-    int val_g = node->val_g;
-   
-    for(int row=row_g; row<SUDOKU_S; row++){
-        for(int col=col_g; col<SUDOKU_S; col++){
-            for(int val=val_g; val<=SUDOKU_S; val++){
-                if(node->grid[row][col].value==0 && valid_cand(&(node->grid),row,col,val)){
-                    // print_binary(node->grid[row][col].candidate); 
-                    node->col_g = col;
-                    node->row_g = row;
-                    node->val_g = val;
-                    struct bt_node *new_node = init_bt_node(node);
-                    node = new_node;
-                    // printf("Previous node ptr: %p\nActual node ptr: %p\n", node->prev_node, node); 
-                    printf("\x1b[H\x1b[2J\x1b[3J");
-                    printf("\n\nPTR: %p, row_g %d, col_g %d, val_g %d\n",
-                                    node, node->row_g, node->col_g, node->val_g);
-                    display_sudoku_v2(&(node->grid),&(root->grid)); 
-                    usleep(5000);
-                    int flag = 1;
-                    while(flag){
-                        new_node = pop_node_validity(node, root);
-                        if(node == new_node){
-                            flag = 0;
-                        }else{
-                            node = new_node;
-                            printf("\x1b[H\x1b[2J\x1b[3J");
-                            printf("\n\nPTR: %p, row_g %d, col_g %d, val_g %d\n",
-                                    node, node->row_g, node->col_g, node->val_g);
-                            display_sudoku_v2(&(node->grid),&(root->grid)); 
-                        }
-                        node = new_node;
-                    }
-                if(node->val_g>9){
-                    // printf(">>>> Over 9 <<<<");
-                    new_node = node->prev_node;
-                    free(node);
-                    node = new_node;
-                    node->val_g++;
-                    bt_solver(root, node);
-                }
-                bt_solver(root, node);
-   
-                }
-                struct bt_node *new_node;
-                if(node->val_g>=9){
-                    // printf(">>>> Over 9 <<<<");
-                    new_node = node->prev_node;
-                    free(node);
-                    node = new_node;
-                    node->val_g++;
-                    bt_solver(root, node);
-                }
-                
-            }
-            val_g = 1;
-        } col_g = 0;
-    } 
-} 
-
-int main(void){ sudoku_grid sudoku; init_sudoku(&sudoku); candidate(&sudoku);
-
-    // Initialize root node.
-    struct bt_node root_node;
-    root_node.prev_node = 0;
-    root_node.row_g = 0;          
-    root_node.col_g = 0;
-    root_node.val_g = 0; 
-
-    memcpy(&root_node.grid,&sudoku,sizeof(sudoku));
-    bt_solver(&root_node,&root_node);
-    display_sudoku_v2(&root_node.grid,&root_node.grid);
+int main(void){ 
+    sd_grid sudoku;
+    init_sudoku(&sudoku);
+    solve(&sudoku);
+    display_sd(&sudoku);
     return 0;
 }
