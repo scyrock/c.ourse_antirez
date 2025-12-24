@@ -22,6 +22,7 @@
 #define TFOBJ_TYPE_LIST 3
 #define TFOBJ_TYPE_SYMBOL 4
 #define TFOBJ_TYPE_ALL 255  // Used by listPopType() and other functions
+
 typedef struct tfobj{
     int refcount;
     // TFOBJ_TYPE_*
@@ -209,8 +210,8 @@ int compareStringObject(tfobj *a, tfobj *b){
     // Find minimum str len by ternary operator
     size_t minlen = a->str.len < b->str.len ? a->str.len : b->str.len;
 
-    /* The memcmp() function returns an  integer less than, equal to, or greater
-     * than zero if  the first n bytes of s1 is found, respectively, to be less
+    /* The memcmp() function returns an integer less than, equal to, or greater
+     * than zero if the first n bytes of s1 is found, respectively, to be less
      * than, to match, or be greater than the first n bytes of s2. */
     int cmp = memcmp(a->str.ptr, b->str.ptr, minlen);
 
@@ -249,9 +250,9 @@ void listPush(tfobj *l, tfobj *ele){
     l->list.len++;                      // Update the list length
 }
 
-/* Pop the top element from interpreter stack, if it match the type. 
- * If the type dosen't match or the stack is empty return NULL.
- * The reference counting of the popped value is not hadled. */
+/* Pop the top element from interpreter stack, if it matches the type.
+ * If the type doesn't match or the stack is empty return NULL.
+ * The reference counting of the popped value is not handled. */
 tfobj *listPopType(tfctx *ctx, int type){
     tfobj *stack = ctx->stack;
     if(stack->list.len==0) return NULL;     // Check if the stack is empty
@@ -264,8 +265,8 @@ tfobj *listPopType(tfctx *ctx, int type){
         free(stack->list.ele);      // free the memory
         stack->list.ele = NULL;     // set stack length to NULL
     }else{
-        // realloc the stack dimention 
-        stack->list.ele = xrealloc(stack->list.ele, 
+        // realloc the stack dimension
+        stack->list.ele = xrealloc(stack->list.ele,
                                    sizeof(tfobj*)*(stack->list.len));
     }
 
@@ -274,7 +275,7 @@ tfobj *listPopType(tfctx *ctx, int type){
 
 
 /* Pop the top element from interpreter stack. If the stack is empty return NULL.
- * The reference counting of the popped value is not hadled. */
+ * The reference counting of the popped value is not handled. */
 tfobj *listPop(tfctx *ctx){
     return listPopType(ctx, TFOBJ_TYPE_ALL);
 }
@@ -375,7 +376,7 @@ tfobj *compile(char *prg){
 
 /*======================== Execution and context =============================*/
 
-/* Check if the current stack length is grather or equal to `min`.*/
+/* Check if the current stack length is greater or equal to `min`.*/
 int ctxCheckStackMinLen(tfctx *ctx, size_t min){
     return (ctx->stack->list.len<min) ? TF_ERR : TF_OK;
 };
@@ -391,7 +392,7 @@ void ctxStackPush(tfctx *ctx, tfobj *obj){
 };
 
 /* Search for a function by name in the context's function table.
- * If the function name is found, the function entry object is returned, 
+ * If the function name is found, the function entry object is returned,
  * otherwise return NULL. */
 tffuncentry *getFunctionByName(tfctx *ctx,tfobj *name){
     for(size_t j=0; j<ctx->functable.func_count; j++){
