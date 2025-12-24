@@ -40,6 +40,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **[Lesson 26](lessons/26)**: Toy Forth 04
 - **[Lesson 27](lessons/27)**: Toy Forth 05
 - **[Lesson 28](lessons/28)**: Variadic Functions
+- **[Lesson 29](lessons/29)**: Toy Forth 06
 ---
 ## Analytic index
 ### A
@@ -142,7 +143,7 @@ This repository collects code and notes from [antirez's](https://github.com/anti
 - **Terminal control** - Lesson 4
 - **Ternary operator** - Lesson 17
 - **`tolower()`** - Lesson 28
-- **Toy Forth** - Lesson 23, 24, 25
+- **Toy Forth** - Lesson 23, 24, 25, 26, 27, 29
 - **Type conversion** - Lesson 5
 - **`typedef`** - Lesson 18
 - **Type promotion** - Lesson 3
